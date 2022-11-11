@@ -1,13 +1,8 @@
 #!/usr/bin/python3
 
-from influxdb import InfluxDBClient
 import operator
 import bisect
-
-JITSI_HOST = 'localhost'
-JITSI_PORT = 8086
-JITSI_DATABASE = 'jitsi'
-JITSI_MEASUREMENT = 'jitsi_stats'
+import matplotlib.pyplot as plt
 
 class Point:
 	def __init__(self, ts, val):
@@ -27,39 +22,13 @@ def calc_ewma(old_ewma, new_data, alpha):
 def calc_bit(val, relation, beta, ewma):
 	return relation(val, beta*ewma)
 
-def vitals_jitsi():
-	client = InfluxDBClient(host=JITSI_HOST,
-	                        port=JITSI_PORT,
-	                        # username='',
-	                        # password='',
-	                        database=JITSI_DATABASE)
-	result = client.query(f'SELECT "bit_rate_download","bit_rate_upload","rtt_aggregate","stress_level" FROM "{JITSI_MEASUREMENT}"') # WHERE time >= \'2022-11-03T17:56:50Z\' AND time <= \'2022-11-03T18:01:50Z\'
-	client.close()
+def plot_diffs(ones):
+	diffs = []
+	for i in range(1, len(ones)):
+		diffs.append(ones[i] - ones[i-1])
+	plt.hist(diffs)
 
-	points = result.get_points()
-	bit_rate_download = []
-	bit_rate_upload = []
-	rtt_aggregate = []
-	stress_level = []
-	for point in points:
-		bit_rate_download.append(Point(point['time'], point['bit_rate_download']))
-		bit_rate_upload.append(Point(point['time'], point['bit_rate_upload']))
-		rtt_aggregate.append(Point(point['time'], point['rtt_aggregate']))
-		stress_level.append(Point(point['time'], point['stress_level']))
-
-	return [
-		Vital(bit_rate_download, 0.1, operator.lt, 0.5)
-		Vital(bit_rate_upload, 0.1, operator.lt, 0.5)
-		Vital(rtt_aggregate, 0.1, operator.gt, 0.5)
-		Vital(stress_level, 0.1, operator.gt, 0.5)
-	]
-
-
-def vitals_wifi():
-	return vitals_wtf
-
-
-def vitals2bits(vitals):
+def vitals2ones(vitals):
 	ones = []
 	for vital in vitals:
 		timestamps, bits = vital2bits(vital)

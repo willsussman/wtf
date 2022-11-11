@@ -10,7 +10,7 @@ class Point:
 		self.val = val
 
 class Vital:
-	def __init__(self, points, alpha, relation, beta)
+	def __init__(self, points, alpha, relation, beta):
 		self.points = points
 		self.alpha = alpha
 		self.relation = relation

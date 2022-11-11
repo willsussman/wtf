@@ -29,10 +29,10 @@ def vitals_jitsi():
 		stress_level.append(Point(point['time'], point['stress_level']))
 
 	return [
-		Vital(bit_rate_download, 0.1, operator.lt, 0.5)
-		Vital(bit_rate_upload, 0.1, operator.lt, 0.5)
-		Vital(rtt_aggregate, 0.1, operator.gt, 0.5)
-		Vital(stress_level, 0.1, operator.gt, 0.5)
+		Vital(bit_rate_download, 0.1, operator.lt, 0.5),
+		Vital(bit_rate_upload, 0.1, operator.lt, 0.5),
+		Vital(rtt_aggregate, 0.1, operator.gt, 0.5),
+		Vital(stress_level, 0.1, operator.gt, 0.5),
 	]
 
 def main():

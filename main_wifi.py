@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
+import wtf
+
 def vitals_wifi():
 	return []
 

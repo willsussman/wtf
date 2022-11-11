@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import wtf
 from influxdb import InfluxDBClient
 
 JITSI_HOST = 'localhost'

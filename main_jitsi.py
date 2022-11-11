@@ -36,7 +36,7 @@ def vitals_jitsi():
 	]
 
 def main():
-    vitals = wtf.vitals_jitsi()
+    vitals = vitals_jitsi()
     ones = wtf.vitals2ones(vitals)
     wtf.plot_diffs(ones)
 

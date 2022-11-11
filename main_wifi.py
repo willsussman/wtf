@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import wtf
+import operator
 
 def vitals_wifi():
 	return []

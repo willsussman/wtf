@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import operator
+# import operator
 import bisect
 import matplotlib.pyplot as plt
 

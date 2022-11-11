@@ -2,6 +2,7 @@
 
 import wtf
 from influxdb import InfluxDBClient
+import operator
 
 JITSI_HOST = 'localhost'
 JITSI_PORT = 8086

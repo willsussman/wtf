@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 
-import bisect
+# import bisect
 import matplotlib.pyplot as plt
+import operator
 
 class Point:
 	def __init__(self, ts, val):
@@ -9,31 +10,64 @@ class Point:
 		self.val = val
 
 class Vital:
-	def __init__(self, points, alpha, relation, beta):
+	def __init__(self, name, points, alpha, relation, beta):
+		if relation == operator.lt and beta > 1 or relation == operator.gt and beta < 1:
+			print(f'WARNING: {name} has unusual beta for relation')
+		self.name = name
 		self.points = points
 		self.alpha = alpha
 		self.relation = relation
 		self.beta = beta
 
 def calc_ewma(old_ewma, new_data, alpha):
-    return alpha * new_data + (1 - alpha) * old_ewma
+	return alpha * new_data + (1 - alpha) * old_ewma
 
 def calc_bit(val, relation, beta, ewma):
 	return relation(val, beta*ewma)
 
-def plot_diffs(ones):
-	diffs = []
-	for i in range(1, len(ones)):
-		diffs.append(ones[i] - ones[i-1])
-	plt.hist(diffs)
+# def plot_diffs(ones):
+# 	diffs = []
+# 	for i in range(1, len(ones)):
+# 		diffs.append((ones[i] - ones[i-1]).total_seconds())
+# 	plt.hist(diffs)
+# 	print('Saving hist.pdf...')
+# 	plt.savefig('hist.pdf')
 
-def vitals2ones(vitals):
-	ones = []
+# def normalize(vector):
+# 	rng = max(vector) - min(vector)
+# 	if rng == 0:
+# 		return vector
+# 	else:
+# 		return [(x - min(vector))/rng for x in vector]
+
+def vitals2bits(vitals):
+	# ones = []
+	all_bits = []
+	fig_all, ax_all = plt.subplots()
 	for vital in vitals:
-		timestamps, bits = vital2bits(vital)
-		for i in range(len(bits)):
-			if bits[i] == 1:
-				bisect.insort(ones, timestamps[i])
+		print(vital.name)
+		timestamps, values, ewmas, bits = vital2bits(vital)
+		ax_all.plot(timestamps, bits, color='red')
+		fig, ax = plt.subplots()
+		# print('| Plotting normalized values...')
+		# ax.plot(timestamps, normalize(values))
+		ax.plot(timestamps, values, color='black')
+		# print('| Plotting normalized ewmas...')
+		# ax.plot(timestamps, normalize(ewmas))
+		ax.plot(timestamps, ewmas, color='blue')
+		# print('| Plotting bits...')
+		# ax.plot(timestamps, bits)
+		ax2 = ax.twinx()
+		ax2.plot(timestamps, bits, color='red')
+		print(f'| Saving {vital.name}.pdf...')
+		plt.savefig(f'{vital.name}.pdf')
+		# for i in range(len(bits)):
+		# 	if bits[i] == 1:
+		# 		bisect.insort(ones, timestamps[i])
+	print('Saving all.pdf...')
+	plt.figure(fig_all)
+	plt.savefig('all.pdf')
+	# return ones
 
 def vital2bits(vital):
 
@@ -54,4 +88,4 @@ def vital2bits(vital):
 		bit = calc_bit(point.val, vital.relation, vital.beta, ewma)
 		bits.append(bit)
 
-	return timestamps, bits
+	return timestamps, values, ewmas, bits

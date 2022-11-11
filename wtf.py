@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 
-# import operator
 import bisect
 import matplotlib.pyplot as plt
 
@@ -47,7 +46,7 @@ def vital2bits(vital):
 	bits = [0]
 
 	# REMAINING POINTS
-	for point in vital.gen:
+	for point in vital.points:
 		timestamps.append(point.ts)
 		values.append(point.val)
 		ewma = calc_ewma(ewma, point.val, vital.alpha)

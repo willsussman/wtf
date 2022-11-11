@@ -23,22 +23,22 @@ def vitals_jitsi():
 	rtt_aggregate = []
 	stress_level = []
 	for point in points:
-		bit_rate_download.append(Point(point['time'], point['bit_rate_download']))
-		bit_rate_upload.append(Point(point['time'], point['bit_rate_upload']))
-		rtt_aggregate.append(Point(point['time'], point['rtt_aggregate']))
-		stress_level.append(Point(point['time'], point['stress_level']))
+		bit_rate_download.append(wtf.Point(point['time'], point['bit_rate_download']))
+		bit_rate_upload.append(wtf.Point(point['time'], point['bit_rate_upload']))
+		rtt_aggregate.append(wtf.Point(point['time'], point['rtt_aggregate']))
+		stress_level.append(wtf.Point(point['time'], point['stress_level']))
 
 	return [
-		Vital(bit_rate_download, 0.1, operator.lt, 0.5),
-		Vital(bit_rate_upload, 0.1, operator.lt, 0.5),
-		Vital(rtt_aggregate, 0.1, operator.gt, 0.5),
-		Vital(stress_level, 0.1, operator.gt, 0.5),
+		wtf.Vital(bit_rate_download, 0.1, operator.lt, 0.5),
+		wtf.Vital(bit_rate_upload, 0.1, operator.lt, 0.5),
+		wtf.Vital(rtt_aggregate, 0.1, operator.gt, 0.5),
+		wtf.Vital(stress_level, 0.1, operator.gt, 0.5),
 	]
 
 def main():
-    vitals = vitals_jitsi()
-    ones = vitals2ones(vitals)
-    plot_diffs(ones)
+    vitals = wtf.vitals_jitsi()
+    ones = wtf.vitals2ones(vitals)
+    wtf.plot_diffs(ones)
 
 if __name__ == '__main__':
     main()

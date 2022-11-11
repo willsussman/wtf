@@ -6,9 +6,9 @@ def vitals_wifi():
 	return []
 
 def main():
-    vitals = vitals_wifi()
-    ones = vitals2ones(vitals)
-    plot_diffs(ones)
+    vitals = wtf.vitals_wifi()
+    ones = wtf.vitals2ones(vitals)
+    wtf.plot_diffs(ones)
 
 if __name__ == '__main__':
     main()

@@ -14,13 +14,7 @@ import wtf
 # JITSI_MEASUREMENT = 'jitsi_stats'
 
 def vitals_wifi():
-    # client = InfluxDBClient(host=JITSI_HOST,
-    #                         port=JITSI_PORT,
-    #                         # username='',
-    #                         # password='',
-    #                         database=JITSI_DATABASE)
-    # result = client.query(f'SELECT "bit_rate_download","bit_rate_upload","rtt_aggregate","stress_level" FROM "{JITSI_MEASUREMENT}" WHERE time >= \'2022-11-03T17:56:50Z\' AND time <= \'2022-11-03T18:01:50Z\'') # WHERE time >= now() - 1h
-    # client.close()
+    
 
     # points = result.get_points()
     # bit_rate_download = []
@@ -39,10 +33,8 @@ def vitals_wifi():
     #         stress_level.append(wtf.Point(time, point['stress_level']))
 
     return [
-        # wtf.Vital('bit_rate_download', bit_rate_download, 0.1, operator.lt, 0.5),
-        # wtf.Vital('bit_rate_upload', bit_rate_upload, 0.1, operator.lt, 0.5),
-        # wtf.Vital('rtt_aggregate', rtt_aggregate, 0.1, operator.gt, 2),
-        # wtf.Vital('stress_level', stress_level, 0.1, operator.gt, 2),
+        wtf.Vital('rssi_linear', rssi_linear, 0.1, operator.lt, 0.5),
+        wtf.Vital('txrate', txrate, 0.1, operator.lt, 0.5),
     ]
 
 def main():

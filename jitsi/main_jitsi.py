@@ -1,5 +1,8 @@
 #!/usr/bin/python3
 
+import sys
+sys.path.insert(1, '../')
+
 import wtf
 from influxdb import InfluxDBClient
 import operator

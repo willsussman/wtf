@@ -4,6 +4,8 @@
 import matplotlib.pyplot as plt
 import operator
 
+DIR = './figs'
+
 class Point:
 	def __init__(self, ts, val):
 		self.ts = ts
@@ -59,14 +61,14 @@ def vitals2bits(vitals):
 		# ax.plot(timestamps, bits)
 		ax2 = ax.twinx()
 		ax2.plot(timestamps, bits, color='red')
-		print(f'| Saving {vital.name}.pdf...')
-		plt.savefig(f'{vital.name}.pdf')
+		print(f'| Saving {DIR}/{vital.name}.pdf...')
+		plt.savefig(f'{DIR}/{vital.name}.pdf')
 		# for i in range(len(bits)):
 		# 	if bits[i] == 1:
 		# 		bisect.insort(ones, timestamps[i])
-	print('Saving all.pdf...')
 	plt.figure(fig_all)
-	plt.savefig('all.pdf')
+	print(f'Saving {DIR}/all.pdf...')
+	plt.savefig(f'{DIR}/all.pdf')
 	# return ones
 
 def vital2bits(vital):

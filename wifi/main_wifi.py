@@ -3,34 +3,26 @@
 import sys
 sys.path.insert(1, '../')
 
-import wtf
-# from influxdb import InfluxDBClient
-# import operator
-# from datetime import datetime
+DIR = './logs'
 
-# JITSI_HOST = 'localhost'
-# JITSI_PORT = 8086
-# JITSI_DATABASE = 'jitsi'
-# JITSI_MEASUREMENT = 'jitsi_stats'
+import wtf
+import operator
+from datetime import datetime
+
+def dBm2mW(dBm):
+    # P_mW = 1 mW * 10^{P_dBm / 10}
+    return 10**(dBm/10)
 
 def vitals_wifi():
-    
-
-    # points = result.get_points()
-    # bit_rate_download = []
-    # bit_rate_upload = []
-    # rtt_aggregate = []
-    # stress_level = []
-    # for point in points:
-    #     time = datetime.fromisoformat(point['time'].replace('Z', '+00:00'))
-    #     if point['bit_rate_download'] is not None:
-    #         bit_rate_download.append(wtf.Point(time, point['bit_rate_download']))
-    #     if point['bit_rate_upload'] is not None:
-    #         bit_rate_upload.append(wtf.Point(time, point['bit_rate_upload']))
-    #     if point['rtt_aggregate'] is not None:
-    #         rtt_aggregate.append(wtf.Point(time, point['rtt_aggregate']))
-    #     if point['stress_level'] is not None:
-    #         stress_level.append(wtf.Point(time, point['stress_level']))
+    with open(f'{DIR}/wifi.txt') as infile:
+        # rssi = []
+        rssi_linear = []
+        txrate = []
+        for line in infile:
+            time = datetime.fromisoformat(f'{line.split()[0]} {line.split()[1]}')
+            # rssi.append(wtf.Point(time, line.split()[2]))
+            rssi_linear.append(wtf.Point(time, dBm2mW(int(line.split()[2]))))
+            txrate.append(wtf.Point(time, int(line.split()[3])))
 
     return [
         wtf.Vital('rssi_linear', rssi_linear, 0.1, operator.lt, 0.5),

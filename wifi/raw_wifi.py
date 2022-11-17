@@ -9,7 +9,6 @@ DIR = './logs'
 
 PATH_TO_AIRPORT = '/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport'
 SAMPLING_INTERVAL = 1.0 # sec
-# OUTFILENAME = 'txrate.txt'
 
 class Airport:
 	def __init__(self, lines):
@@ -62,7 +61,7 @@ lastAssocStatus: {self.lastAssocStatus}\n\
 	# 8: lastAssocStatus: 0
 	# 9:     802.11 auth: open
 	# 10:       link auth: wpa2
-	# 11:           BSSID: xx:xx:xx:xx:xx:xx
+	# 11:           BSSID:
 	# 12:            SSID: MIT SECURE
 	# 13:             MCS: 8
 	# 14:   guardInterval: 800
@@ -75,6 +74,7 @@ def sample_airport():
 	return Airport(lines)
 
 def main():
+	os.makedirs(f'{DIR}', exist_ok=True)
 	with open(f'{DIR}/wifi.txt', 'a') as outfile:
 		fileno = outfile.fileno()
 		while True:

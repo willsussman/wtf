@@ -5,9 +5,11 @@ from datetime import datetime
 import time
 import os
 
+DIR = './logs'
+
 PATH_TO_AIRPORT = '/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport'
 SAMPLING_INTERVAL = 1.0 # sec
-OUTFILENAME = 'txrate.txt'
+# OUTFILENAME = 'txrate.txt'
 
 class Airport:
 	def __init__(self, lines):
@@ -73,13 +75,14 @@ def sample_airport():
 	return Airport(lines)
 
 def main():
-	with open(OUTFILENAME, 'a') as outfile:
+	with open(f'{DIR}/wifi.txt', 'a') as outfile:
 		fileno = outfile.fileno()
 		while True:
 			now = datetime.now()
-			txrate = sample_airport().lastTxRate
-			# print(f'{now} {txrate}')
-			outfile.write(f'{now} {txrate}\n')
+			sample = sample_airport()
+			rssi = sample.agrCtlRSSI
+			txrate = sample.lastTxRate
+			outfile.write(f'{now} {rssi} {txrate}\n')
 			outfile.flush()
 			os.fsync(fileno)
 			time.sleep(SAMPLING_INTERVAL)

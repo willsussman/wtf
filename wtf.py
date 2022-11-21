@@ -3,6 +3,7 @@
 # import bisect
 import matplotlib.pyplot as plt
 import operator
+import os
 
 DIR = './figs'
 
@@ -43,25 +44,38 @@ def calc_bit(val, relation, beta, ewma):
 # 		return [(x - min(vector))/rng for x in vector]
 
 def vitals2bits(vitals):
+	os.makedirs(f'{DIR}', exist_ok=True)
 	# ones = []
 	all_bits = []
 	fig_all, ax_all = plt.subplots()
 	for vital in vitals:
 		print(vital.name)
 		timestamps, values, ewmas, bits = vital2bits(vital)
+		ax_all.set_xlabel('Timestamp')
+		ax_all.set_ylabel('WTF bit')
+		ax_all.set_yticks((0, 1))
 		ax_all.plot(timestamps, bits, color='red')
 		fig, ax = plt.subplots()
 		# print('| Plotting normalized values...')
 		# ax.plot(timestamps, normalize(values))
-		ax.plot(timestamps, values, color='black')
+		ax.set_xlabel('Timestamp')
+		ax.set_ylabel(f'{vital.name}')
+		lns1 = ax.plot(timestamps, values, color='black', label='Original')
 		# print('| Plotting normalized ewmas...')
 		# ax.plot(timestamps, normalize(ewmas))
-		ax.plot(timestamps, ewmas, color='blue')
+		lns2 = ax.plot(timestamps, ewmas, color='blue', label='EWMA')
 		# print('| Plotting bits...')
 		# ax.plot(timestamps, bits)
 		ax2 = ax.twinx()
-		ax2.set_ylim(0, 1)
-		ax2.plot(timestamps, bits, color='red')
+		ax2.set_ylabel('WTF bit', rotation=270)
+		ax2.set_yticks((0, 1))
+		ax2.set_ylim(-0.05, 1.05)
+		lns3 = ax2.plot(timestamps, bits, color='red', label='WTF bit')
+
+		lns = lns1 + lns2 + lns3
+		labs = [l.get_label() for l in lns]
+		ax.legend(lns, labs, loc=2)
+
 		print(f'| Saving {DIR}/{vital.name}.pdf...')
 		plt.savefig(f'{DIR}/{vital.name}.pdf')
 		# for i in range(len(bits)):

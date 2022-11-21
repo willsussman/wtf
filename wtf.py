@@ -43,7 +43,7 @@ def calc_bit(val, relation, beta, ewma):
 # 	else:
 # 		return [(x - min(vector))/rng for x in vector]
 
-def vitals2bits(vitals):
+def vitals2bits(vitals, element_name):
 	os.makedirs(f'{DIR}', exist_ok=True)
 	# ones = []
 	all_bits = []
@@ -51,6 +51,7 @@ def vitals2bits(vitals):
 	for vital in vitals:
 		print(vital.name)
 		timestamps, values, ewmas, bits = vital2bits(vital)
+		ax_all.set_title(element_name)
 		ax_all.set_xlabel('Timestamp')
 		ax_all.set_ylabel('WTF bit')
 		ax_all.set_yticks((0, 1))

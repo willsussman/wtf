@@ -60,6 +60,7 @@ def vitals2bits(vitals):
 		# print('| Plotting bits...')
 		# ax.plot(timestamps, bits)
 		ax2 = ax.twinx()
+		ax2.set_ylim(0, 1)
 		ax2.plot(timestamps, bits, color='red')
 		print(f'| Saving {DIR}/{vital.name}.pdf...')
 		plt.savefig(f'{DIR}/{vital.name}.pdf')

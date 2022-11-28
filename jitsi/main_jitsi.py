@@ -20,7 +20,7 @@ def vitals_jitsi():
 	                        # username='',
 	                        # password='',
 	                        database=JITSI_DATABASE)
-	result = client.query(f'SELECT "bit_rate_download","bit_rate_upload","rtt_aggregate","stress_level" FROM "{JITSI_MEASUREMENT}" WHERE time >= \'2022-11-03T17:56:50Z\' AND time <= \'2022-11-03T18:01:50Z\'') # WHERE time >= now() - 1h
+	result = client.query(f'SELECT "bit_rate_download","bit_rate_upload","rtt_aggregate","stress_level" FROM "{JITSI_MEASUREMENT}" WHERE time >= now() - 15m ') # WHERE time >= \'2022-11-03T17:56:50Z\' AND time <= \'2022-11-03T18:01:50Z\'
 	client.close()
 
 	points = result.get_points()

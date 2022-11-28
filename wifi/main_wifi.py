@@ -4,6 +4,7 @@ import sys
 sys.path.insert(1, '../')
 
 DIR = './logs'
+GAMMA = 0.5
 
 import wtf
 import operator
@@ -31,7 +32,7 @@ def vitals_wifi():
 
 def main():
     vitals = vitals_wifi()
-    wtf.vitals2bits(vitals, 'Wi-Fi')
+    wtf.vitals2bits(vitals, 'Wi-Fi', GAMMA)
 
 if __name__ == '__main__':
     main()

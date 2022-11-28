@@ -12,6 +12,7 @@ JITSI_HOST = 'localhost'
 JITSI_PORT = 8086
 JITSI_DATABASE = 'jitsi'
 JITSI_MEASUREMENT = 'jitsi_stats'
+GAMMA = 0.5
 
 def vitals_jitsi():
 	client = InfluxDBClient(host=JITSI_HOST,
@@ -41,13 +42,13 @@ def vitals_jitsi():
 	return [
 		wtf.Vital('bit_rate_download', bit_rate_download, 0.1, operator.lt, 0.5),
 		wtf.Vital('bit_rate_upload', bit_rate_upload, 0.1, operator.lt, 0.5),
-		wtf.Vital('rtt_aggregate', rtt_aggregate, 0.1, operator.gt, 2),
-		wtf.Vital('stress_level', stress_level, 0.1, operator.gt, 2),
+		wtf.Vital('rtt_aggregate', rtt_aggregate, 0.1, operator.gt, 2.0),
+		wtf.Vital('stress_level', stress_level, 0.1, operator.gt, 2.0),
 	]
 
 def main():
 	vitals = vitals_jitsi()
-	wtf.vitals2bits(vitals, 'Jitsi')
+	wtf.vitals2bits(vitals, 'Jitsi', GAMMA)
 
 if __name__ == '__main__':
     main()

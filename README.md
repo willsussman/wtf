@@ -8,4 +8,4 @@ The stored raw data ultimately needs to be converted into WTF bits. We provide a
 
 In principle, elements could generate WTF bits directly. We do not do this, at least not yet.
 
-`vitals2bits()` applies a simple signal-processing scheme: For sample $j$ of vital $i$, if $y_{ij} \mathrel{R} \beta_i * EWMA(\alpha_i, y_{ij})$, then the bit is set. Else, the bit is unset. We do not claim that this scheme is optimal; improving it is future work.
+`vitals2bits()` applies a simple signal-processing scheme: For sample $j$ of vital $i$, if $y_{ij} \mathrel{R} \beta_i * EWMA(\alpha_i, y_{ij})$, then the bit is set. Else, the bit is unset. For example, if $\mathrel{R} = <$, $\alpha = 0.1$, and $\beta = 0.5$, then the bit is set when $y_{ij} < 0.5 * EWMA(0.1, y_{ij})$. We do not claim that this scheme is optimal; improving it is future work.

@@ -29,7 +29,7 @@ def vitals_wifi():
             if now - time > timedelta(minutes=15):
                 # print('BREAK')
                 break
-            rssi_linear.insert(0, wtf.Point(time, dBm2mW(rssi_split))))
+            rssi_linear.insert(0, wtf.Point(time, dBm2mW(int(rssi_split))))
             txrate.insert(0, wtf.Point(time, int(txrate_split)))
 
     # print(f'returning rssi_linear.reverse()={rssi_linear} txrate.reverse()={txrate}')

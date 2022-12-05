@@ -28,7 +28,6 @@ def vitals_cpu():
 
 		for line in frb:
 
-			print(line)
 			splits = line.split()
 			if len(splits) != 11:
 				continue

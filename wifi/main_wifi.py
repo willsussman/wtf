@@ -17,8 +17,8 @@ def dBm2mW(dBm):
     return 10**(dBm/10)
 
 def vitals_wifi():
+    now = datetime.now()
     with FileReadBackwards(f'{DIR}/wifi.txt', encoding="utf-8") as frb:
-        now = datetime.now()
         rssi_linear = []
         txrate = []
         for line in frb:

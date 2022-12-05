@@ -13,8 +13,8 @@ from datetime import timedelta
 from file_read_backwards import FileReadBackwards
 
 def vitals_cpu():
+	now = datetime.now()
 	with FileReadBackwards(f'{DIR}/cpu.txt', encoding="utf-8") as frb:
-		now = datetime.now()
 
 		# KBpt = []
 		# tps = []

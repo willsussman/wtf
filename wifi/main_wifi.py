@@ -17,22 +17,20 @@ def dBm2mW(dBm):
     return 10**(dBm/10)
 
 def vitals_wifi():
-    # with open(f'{DIR}/wifi.txt') as infile:
     with FileReadBackwards(f'{DIR}/wifi.txt', encoding="utf-8") as frb:
         now = datetime.now()
-        # rssi = []
         rssi_linear = []
         txrate = []
-        # for line in infile:
         for line in frb:
-            time = datetime.fromisoformat(f'{line.split()[0]} {line.split()[1]}')
-            # print(f'now={now} time={time} diff={now - time}')
+
+            date_split, time_split, rssi_split, txrate_split = line.split()
+
+            time = datetime.fromisoformat(f'{date_split} {time_split}')
             if now - time > timedelta(minutes=15):
                 # print('BREAK')
                 break
-            # rssi.append(wtf.Point(time, line.split()[2]))
-            rssi_linear.insert(0, wtf.Point(time, dBm2mW(int(line.split()[2]))))
-            txrate.insert(0, wtf.Point(time, int(line.split()[3])))
+            rssi_linear.insert(0, wtf.Point(time, dBm2mW(rssi_split))))
+            txrate.insert(0, wtf.Point(time, int(txrate_split)))
 
     # print(f'returning rssi_linear.reverse()={rssi_linear} txrate.reverse()={txrate}')
     return [

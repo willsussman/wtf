@@ -1,5 +1,5 @@
 #!/bin/sh
 
-python3 raw.py &
+./raw.sh &
 
 python3 ../collect/server.py --port 1122 &

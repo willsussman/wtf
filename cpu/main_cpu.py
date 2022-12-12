@@ -62,7 +62,7 @@ def vitals_cpu():
 
 def main():
 	vitals = vitals_cpu()
-	return wtf.vitals2bits(vitals, 'CPU', GAMMA)
+	wtf.vitals2bits(vitals, 'CPU', GAMMA)
 
 if __name__ == '__main__':
 	main()

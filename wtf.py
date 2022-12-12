@@ -86,7 +86,12 @@ def vitals2bits(vitals, element_name, gamma):
 		# 		bisect.insort(ones, timestamps[i])
 	lnsB = ax_all.plot(merged_timestamps, merged_bits, color='orange', label='OR\'ed WTF bits')
 
-	return merged_timestamps, merged_bits
+	# return merged_timestamps, merged_bits
+
+	print('Writing out bits.txt...')
+	with open("bits.txt", "w") as bitsfile:
+		for i in range(len(merged_timestamps)):
+			bitsfile.write(f'{merged_timestamps[i]} {merged_bits[i]}\n')
 
 	# quantified_bits = quantify_bits(merged_timestamps, merged_bits, gamma)
 	# lnsC = ax_all.plot(merged_timestamps, quantified_bits, color='green', label=f'EWMA (γ={gamma})')
@@ -105,7 +110,7 @@ def vital2bits(vital):
 	values = [point.val]
 	ewma = point.val
 	ewmas = [ewma]
-	bits = [0]
+	bits = [False]
 
 	# REMAINING POINTS
 	for point in vital.points:

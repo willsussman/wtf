@@ -40,7 +40,7 @@ def vitals_wifi():
 
 def main():
     vitals = vitals_wifi()
-    return wtf.vitals2bits(vitals, 'Wi-Fi', GAMMA)
+    wtf.vitals2bits(vitals, 'Wi-Fi', GAMMA)
 
 if __name__ == '__main__':
     main()

@@ -64,7 +64,7 @@ def main():
 		leveldict[args.levels[i]] = i
 
 	vitals = vitals_loglevels(args.filepath, args.pattern, leveldict, float(args.alpha), op, float(args.beta))
-	return wtf.vitals2bits(vitals, 'Log Levels', GAMMA)
+	wtf.vitals2bits(vitals, 'Log Levels', GAMMA)
 
 if __name__ == '__main__':
 	main()

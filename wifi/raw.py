@@ -80,7 +80,7 @@ def sample_airport():
 
 def main():
 	os.makedirs(f'{DIR}', exist_ok=True)
-	with open(f'raw.txt', 'a') as outfile:
+	with open(f'{DIR}/raw.txt', 'a') as outfile:
 		fileno = outfile.fileno()
 		while True:
 			now = datetime.now()

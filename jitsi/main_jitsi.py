@@ -48,7 +48,7 @@ def vitals_jitsi():
 
 def main():
 	vitals = vitals_jitsi()
-	wtf.vitals2bits(vitals, 'Jitsi', GAMMA)
+	return wtf.vitals2bits(vitals, 'Jitsi', GAMMA)
 
 if __name__ == '__main__':
     main()

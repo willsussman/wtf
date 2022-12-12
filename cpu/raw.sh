@@ -1,6 +1,6 @@
 #!/bin/sh
 
-dir='./logs'
+dir='./data'
 sampling_interval=1 # sec
 
 mkdir -p $dir

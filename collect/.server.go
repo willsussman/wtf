@@ -17,7 +17,15 @@ type CollectServer string
 
 func (t *CollectServer) Get(args *Args, reply *Reply) error {
 	print("Entered Get()\n")
-    *reply = "This is a message from the RPC server"
+    // *reply = "This is a message from the RPC server"
+
+    cmd := exec.Command("python3", "main.py")
+    err := cmd.Run()
+
+    with open("data/bits.txt", "r") as bitsfile:
+        lines = bitsfile.readlines()
+
+
 	print("Returning from Get()\n")
     return nil
 }

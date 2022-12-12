@@ -5,7 +5,7 @@ from datetime import datetime
 import time
 import os
 
-DIR = './logs'
+DIR = './data'
 
 PATH_TO_AIRPORT = '/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport'
 SAMPLING_INTERVAL = 1.0 # sec
@@ -80,7 +80,7 @@ def sample_airport():
 
 def main():
 	os.makedirs(f'{DIR}', exist_ok=True)
-	with open(f'{DIR}/wifi.txt', 'a') as outfile:
+	with open(f'raw.txt', 'a') as outfile:
 		fileno = outfile.fileno()
 		while True:
 			now = datetime.now()

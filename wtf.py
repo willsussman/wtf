@@ -86,21 +86,21 @@ def vitals2bits(vitals, element_name, gamma):
 		# 		bisect.insort(ones, timestamps[i])
 	lnsB = ax_all.plot(merged_timestamps, merged_bits, color='orange', label='OR\'ed WTF bits')
 
-	# return merged_timestamps, merged_bits
+	quantified_bits = quantify_bits(merged_timestamps, merged_bits, gamma)
+	lnsC = ax_all.plot(merged_timestamps, quantified_bits, color='green', label=f'EWMA (γ={gamma})')
+	lns = lnsA + lnsB + lnsC
+	labs = [l.get_label() for l in lns]
+	ax_all.legend(lns, labs, loc=2)
+	plt.figure(fig_all)
+	print(f'Saving {DIR}/all.pdf...')
+	plt.savefig(f'{DIR}/all.pdf')
 
-	print('Writing out bits.txt...')
-	with open("bits.txt", "w") as bitsfile:
-		for i in range(len(merged_timestamps)):
-			bitsfile.write(f'{merged_timestamps[i]} {merged_bits[i]}\n')
+	# print('Writing out bits.txt...')
+	# with open("bits.txt", "w") as bitsfile:
+	# 	for i in range(len(merged_timestamps)):
+	# 		bitsfile.write(f'{merged_timestamps[i]} {merged_bits[i]}\n')
 
-	# quantified_bits = quantify_bits(merged_timestamps, merged_bits, gamma)
-	# lnsC = ax_all.plot(merged_timestamps, quantified_bits, color='green', label=f'EWMA (γ={gamma})')
-	# lns = lnsA + lnsB + lnsC
-	# labs = [l.get_label() for l in lns]
-	# ax_all.legend(lns, labs, loc=2)
-	# plt.figure(fig_all)
-	# print(f'Saving {DIR}/all.pdf...')
-	# plt.savefig(f'{DIR}/all.pdf')
+	return merged_timestamps, merged_bits
 
 def vital2bits(vital):
 

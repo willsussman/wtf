@@ -1,4 +1,4 @@
-python3 main_loglevels.py \
+python3 main.py \
 	--filepath ./logs/example_log.txt \
 	--pattern "(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}.\d{6}) ([A-Z]*) .*" \
 	--alpha 0.1 \

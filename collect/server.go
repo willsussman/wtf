@@ -11,10 +11,11 @@ import (
 // an RPC server in Go
 
 type Args struct{}
+type Reply struct{}
 
 type CollectServer string
 
-func (t *CollectServer) Get(args *Args, reply *string) error {
+func (t *CollectServer) Get(args *Args, reply *Reply) error {
 	print("Entered Get()\n")
     *reply = "This is a message from the RPC server"
 	print("Returning from Get()\n")

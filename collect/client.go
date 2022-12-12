@@ -9,6 +9,7 @@ import (
 // rpc client
 
 type Args struct{}
+type Reply struct{}
 
 func main() {
 	print("Entered main()\n")
@@ -16,7 +17,7 @@ func main() {
     hostname := os.Args[1]
     port := os.Args[2]
 
-    var reply string
+    var reply Reply
 
     args := Args{}
 

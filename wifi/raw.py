@@ -71,8 +71,8 @@ lastAssocStatus: {self.lastAssocStatus}\n\
 def sample_airport():
 	obj = subprocess.run([f'{PATH_TO_AIRPORT}', '-I'], capture_output=True, text=True)
 
-	# os.system('clear')
-	# print(obj.stdout)
+	os.system('clear')
+	print(obj.stdout)
 
 	lines = obj.stdout.splitlines()
 	# print(lines)

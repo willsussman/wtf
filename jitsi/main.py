@@ -7,6 +7,7 @@ import wtf
 from influxdb import InfluxDBClient
 import operator
 from datetime import datetime
+import argparse
 
 JITSI_HOST = 'localhost'
 JITSI_PORT = 8086
@@ -47,6 +48,13 @@ def vitals_jitsi():
 	]
 
 def main():
+
+	parser = argparse.ArgumentParser()
+	parser.add_argument('-t', type=str, required=True)
+	parser.add_argument('-T', type=str, required=True)
+	args = parser.parse_args()
+	print(f'Requested T={args.T} before t={args.t}')
+
 	vitals = vitals_jitsi()
 	return wtf.vitals2bits(vitals, 'Jitsi', GAMMA)
 

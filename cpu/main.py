@@ -37,6 +37,8 @@ def vitals_cpu(t, T):
 				continue
 
 			time = datetime.fromisoformat(f'{date_split} {time_split}')
+			if time > t:
+                continue
 			if t - time > T:
 				break
 			# KBpt.insert(0, wtf.Point(time, float(KBpt_split)))

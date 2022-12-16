@@ -29,6 +29,8 @@ def vitals_loglevels(t, T, filepath, pattern, leveldict, alpha, op, beta):
 			level_group = result.group(2)
 
 			time = datetime.fromisoformat(ts_group)
+			if time > t:
+                continue
 			if t - time > T:
 				break
 			levels.insert(0, wtf.Point(time, leveldict[level_group]))

@@ -5,7 +5,7 @@ sys.path.insert(1, '../')
 
 DIR = './data'
 GAMMA = 0.5
-BW = 50 # Mbps
+BW = 0.1 # Mbps
 
 import wtf
 import operator

@@ -47,8 +47,8 @@ def vitals2bits(vitals, element_name, gamma):
 	os.makedirs(f'{DIR}', exist_ok=True)
 	merged_timestamps = []
 	merged_bits = []
-	fig_all, ax_all = plt.subplots()
-	print(fig_all)
+	fig_all, ax_all = plt.subplots("all")
+	# print(fig_all)
 
 	nonempty = False
 	for vital in vitals:
@@ -101,7 +101,7 @@ def vitals2bits(vitals, element_name, gamma):
 		lns = lnsA + lnsB + lnsC
 		labs = [l.get_label() for l in lns]
 		ax_all.legend(lns, labs, loc=2)
-		plt.figure(fig_all)
+		plt.figure("all")
 		print(f'Saving {DIR}/all.pdf...')
 		plt.savefig(f'{DIR}/all.pdf')
 

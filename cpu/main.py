@@ -15,7 +15,7 @@ import argparse
 
 def vitals_cpu(t, T):
 	# now = datetime.now()
-	with FileReadBackwards(f'{DIR}/cpu.txt', encoding="utf-8") as frb:
+	with FileReadBackwards(f'{DIR}/raw.txt', encoding="utf-8") as frb:
 
 		# KBpt = []
 		# tps = []

@@ -48,6 +48,7 @@ def vitals2bits(vitals, element_name, gamma):
 	merged_timestamps = []
 	merged_bits = []
 	fig_all, ax_all = plt.subplots()
+	print(fig_all)
 
 	nonempty = False
 	for vital in vitals:

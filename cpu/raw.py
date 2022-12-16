@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 
 # import subprocess
-# from datetime import datetime
+from datetime import datetime
 # import time
-# import os
+import os
 import psutil
 
 DIR = './data'

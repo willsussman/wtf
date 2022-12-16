@@ -1,5 +1,2 @@
-* Each main.py needs two arguments:
-	- t, the time of the button push (e.g., 12/12/22 17:04:18)
-	- T, the window before the button push (e.g., 15m)
 * Implement client.py and server.py
 * Implement artificial wifi throttling

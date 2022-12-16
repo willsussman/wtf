@@ -15,8 +15,8 @@ from enum import Enum
 import re
 import os
 
-def vitals_loglevels(filepath, pattern, leveldict, alpha, op, beta):
-	now = datetime.now()
+def vitals_loglevels(t, T, filepath, pattern, leveldict, alpha, op, beta):
+	# now = datetime.now()
 
 	with FileReadBackwards(filepath, encoding="utf-8") as frb:
 
@@ -29,7 +29,7 @@ def vitals_loglevels(filepath, pattern, leveldict, alpha, op, beta):
 			level_group = result.group(2)
 
 			time = datetime.fromisoformat(ts_group)
-			if now - time > timedelta(minutes=15):
+			if t - time > T:
 				break
 			levels.insert(0, wtf.Point(time, leveldict[level_group]))
 		name = os.path.splitext(os.path.basename(filepath))[0]
@@ -44,6 +44,16 @@ def main():
 	parser.add_argument('--op', type=str, required=True)
 	parser.add_argument('--beta', type=str, required=True)
 	parser.add_argument('--levels', nargs='*', type=str)
+
+	parser.add_argument('-t', type=str, required=True)
+	parser.add_argument('-d', type=int, default=0)
+	parser.add_argument('-s', type=int, default=0)
+	parser.add_argument('-us', type=int, default=0)
+	parser.add_argument('-ms', type=int, default=0)
+	parser.add_argument('-m', type=int, default=0)
+	parser.add_argument('-hr', type=int, default=0)
+	parser.add_argument('-w', type=int, default=0)
+
 	args = parser.parse_args()
 	# print(args.filepath)
 	# print(args.pattern)
@@ -63,7 +73,13 @@ def main():
 	for i in range(len(args.levels)):
 		leveldict[args.levels[i]] = i
 
-	vitals = vitals_loglevels(args.filepath, args.pattern, leveldict, float(args.alpha), op, float(args.beta))
+	
+	tobj = datetime.fromisoformat(args.t)
+	# tobj = datetime.strptime(args.t, '%Y-%m-%d %H:%M:%S.%f')
+	Tobj = timedelta(days=args.d, seconds=args.s, microseconds=args.us, milliseconds=args.ms, minutes=args.m, hours=args.hr, weeks=args.w)
+
+
+	vitals = vitals_loglevels(tobj, Tobj, args.filepath, args.pattern, leveldict, float(args.alpha), op, float(args.beta))
 	return wtf.vitals2bits(vitals, 'Log Levels', GAMMA)
 
 if __name__ == '__main__':

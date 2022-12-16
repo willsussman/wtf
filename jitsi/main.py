@@ -7,6 +7,7 @@ import wtf
 from influxdb import InfluxDBClient
 import operator
 from datetime import datetime
+from datetime import timedelta
 import argparse
 
 JITSI_HOST = 'localhost'
@@ -16,12 +17,17 @@ JITSI_MEASUREMENT = 'jitsi_stats'
 GAMMA = 0.5
 
 def vitals_jitsi(t, T):
+	# 2022-11-03T17:56:50Z
+	format = '%Y-%m-%dT%H:%M:%SZ'
+	lbound = (t - T).strftime(format)
+	rbound = t.strftime(format)
+	print(f'time >= {lbound} AND time <= {rbound}')
 	client = InfluxDBClient(host=JITSI_HOST,
 	                        port=JITSI_PORT,
 	                        # username='',
 	                        # password='',
 	                        database=JITSI_DATABASE)
-	result = client.query(f'SELECT "bit_rate_download","bit_rate_upload","rtt_aggregate","stress_level" FROM "{JITSI_MEASUREMENT}" WHERE time >= now() - 15m ') # WHERE time >= \'2022-11-03T17:56:50Z\' AND time <= \'2022-11-03T18:01:50Z\'
+	result = client.query(f'SELECT "bit_rate_download","bit_rate_upload","rtt_aggregate","stress_level" FROM "{JITSI_MEASUREMENT}" WHERE time >= \'{lbound}\' AND time <= \'{rbound}\'') # WHERE time >= \'2022-11-03T17:56:50Z\' AND time <= \'2022-11-03T18:01:50Z\' # time >= now() - 15m
 	client.close()
 
 	points = result.get_points()
@@ -51,14 +57,20 @@ def main():
 
 	parser = argparse.ArgumentParser()
 	parser.add_argument('-t', type=str, required=True)
-	parser.add_argument('-T', type=str, required=True)
+	parser.add_argument('-d', type=int, default=0)
+	parser.add_argument('-s', type=int, default=0)
+	parser.add_argument('-us', type=int, default=0)
+	parser.add_argument('-ms', type=int, default=0)
+	parser.add_argument('-m', type=int, default=0)
+	parser.add_argument('-hr', type=int, default=0)
+	parser.add_argument('-w', type=int, default=0)
 	args = parser.parse_args()
-	print(f'Requested T={args.T} before t={args.t}')
 
-	# 2022-12-16 02:15:59.625592+00:00
-	datetime.strptime(t, '%Y-%m-%d %H:%M:%S.%f')
+	tobj = datetime.fromisoformat(args.t)
+	# tobj = datetime.strptime(args.t, '%Y-%m-%d %H:%M:%S.%f')
+	Tobj = timedelta(days=args.d, seconds=args.s, microseconds=args.us, milliseconds=args.ms, minutes=args.m, hours=args.hr, weeks=args.w)
 
-	vitals = vitals_jitsi()
+	vitals = vitals_jitsi(tobj, Tobj)
 	return wtf.vitals2bits(vitals, 'Jitsi', GAMMA)
 
 if __name__ == '__main__':

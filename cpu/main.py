@@ -12,8 +12,8 @@ from datetime import datetime
 from datetime import timedelta
 from file_read_backwards import FileReadBackwards
 
-def vitals_cpu():
-	now = datetime.now()
+def vitals_cpu(t, T):
+	# now = datetime.now()
 	with FileReadBackwards(f'{DIR}/cpu.txt', encoding="utf-8") as frb:
 
 		# KBpt = []
@@ -36,7 +36,7 @@ def vitals_cpu():
 				continue
 
 			time = datetime.fromisoformat(f'{date_split} {time_split}')
-			if now - time > timedelta(minutes=15):
+			if t - time > T:
 				break
 			# KBpt.insert(0, wtf.Point(time, float(KBpt_split)))
 			# tps.insert(0, wtf.Point(time, int(tps_split)))
@@ -61,7 +61,23 @@ def vitals_cpu():
 	]
 
 def main():
-	vitals = vitals_cpu()
+
+	parser = argparse.ArgumentParser()
+	parser.add_argument('-t', type=str, required=True)
+	parser.add_argument('-d', type=int, default=0)
+	parser.add_argument('-s', type=int, default=0)
+	parser.add_argument('-us', type=int, default=0)
+	parser.add_argument('-ms', type=int, default=0)
+	parser.add_argument('-m', type=int, default=0)
+	parser.add_argument('-hr', type=int, default=0)
+	parser.add_argument('-w', type=int, default=0)
+	args = parser.parse_args()
+
+	tobj = datetime.fromisoformat(args.t)
+	# tobj = datetime.strptime(args.t, '%Y-%m-%d %H:%M:%S.%f')
+	Tobj = timedelta(days=args.d, seconds=args.s, microseconds=args.us, milliseconds=args.ms, minutes=args.m, hours=args.hr, weeks=args.w)
+
+	vitals = vitals_cpu(tobj, Tobj)
 	return wtf.vitals2bits(vitals, 'CPU', GAMMA)
 
 if __name__ == '__main__':

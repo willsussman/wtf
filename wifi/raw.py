@@ -75,7 +75,9 @@ def sample_airport():
 	# print(obj.stdout)
 
 	lines = obj.stdout.splitlines()
-	print(lines)
+	# print(lines)
+	if len(lines) == 0:
+		return None
 	return Airport(lines)
 
 def main():
@@ -86,6 +88,8 @@ def main():
 			# now = datetime.now(timezone.utc)
 			now = datetime.utcnow()
 			sample = sample_airport()
+			if sample is None:
+				continue
 			rssi = sample.agrCtlRSSI
 			txrate = sample.lastTxRate
 			outfile.write(f'{now} {rssi} {txrate}\n')

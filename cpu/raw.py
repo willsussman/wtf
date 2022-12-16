@@ -93,10 +93,10 @@ def main():
 			# 	continue
 			# rssi = sample.agrCtlRSSI
 			# txrate = sample.lastTxRate
-			pct = psutil.cpu_percent(interval=SAMPLING_INTERVAL)
+            pct = psutil.cpu_percent(interval=SAMPLING_INTERVAL)
             outfile.write(f'{now} {pct}\n')
-			outfile.flush()
-			os.fsync(fileno)
+            outfile.flush()
+            os.fsync(fileno)
 			# time.sleep(SAMPLING_INTERVAL)
 
 

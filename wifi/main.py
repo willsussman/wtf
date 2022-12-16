@@ -63,15 +63,15 @@ def main():
     args = parser.parse_args()
 
     tobj = datetime.fromisoformat(args.t)
-    if args.f is not None:
-        fobj = datetime.fromisoformat(args.f)
-    else:
-        fobj = None
+	if args.f is not None:
+		fobj = datetime.fromisoformat(args.f)
+	else:
+		fobj = None
     # tobj = datetime.strptime(args.t, '%Y-%m-%d %H:%M:%S.%f')
     Tobj = timedelta(days=args.d, seconds=args.s, microseconds=args.us, milliseconds=args.ms, minutes=args.m, hours=args.hr, weeks=args.w)
 
     vitals = vitals_wifi(tobj, Tobj, fobj)
-    return wtf.vitals2bits(vitals, 'Wi-Fi', GAMMA)
+    return wtf.vitals2bits(vitals, 'Wi-Fi', GAMMA, fobj)
 
 if __name__ == '__main__':
     main()

@@ -33,6 +33,7 @@ def vitals_loglevels(t, T, filepath, pattern, leveldict, alpha, op, beta):
 				continue
 			if t - time > T:
 				break
+				
 			levels.insert(0, wtf.Point(time, leveldict[level_group]))
 		name = os.path.splitext(os.path.basename(filepath))[0]
 		return [wtf.Vital(f'{name}', levels, alpha, op, beta)]
@@ -55,6 +56,7 @@ def main():
 	parser.add_argument('-m', type=int, default=0)
 	parser.add_argument('-hr', type=int, default=0)
 	parser.add_argument('-w', type=int, default=0)
+	parser.add_argument('-f', type=str)
 
 	args = parser.parse_args()
 	# print(args.filepath)
@@ -77,12 +79,16 @@ def main():
 
 	
 	tobj = datetime.fromisoformat(args.t)
+	if args.f is not None:
+		fobj = datetime.fromisoformat(args.f)
+	else:
+		fobj = None
 	# tobj = datetime.strptime(args.t, '%Y-%m-%d %H:%M:%S.%f')
 	Tobj = timedelta(days=args.d, seconds=args.s, microseconds=args.us, milliseconds=args.ms, minutes=args.m, hours=args.hr, weeks=args.w)
 
 
 	vitals = vitals_loglevels(tobj, Tobj, args.filepath, args.pattern, leveldict, float(args.alpha), op, float(args.beta))
-	return wtf.vitals2bits(vitals, 'Log Levels', GAMMA)
+	return wtf.vitals2bits(vitals, 'Log Levels', GAMMA, fobj)
 
 if __name__ == '__main__':
 	main()

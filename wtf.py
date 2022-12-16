@@ -43,7 +43,7 @@ def calc_bit(val, relation, beta, ewma):
 # 	else:
 # 		return [(x - min(vector))/rng for x in vector]
 
-def vitals2bits(vitals, element_name, gamma):
+def vitals2bits(vitals, element_name, gamma, f):
 	os.makedirs(f'{DIR}', exist_ok=True)
 	merged_timestamps = []
 	merged_bits = []
@@ -71,6 +71,7 @@ def vitals2bits(vitals, element_name, gamma):
 		# ax.plot(timestamps, normalize(values))
 		# ax.set_title(f'α={vital.alpha}, β={vital.beta}')
 		ax.set_xlabel('Timestamp')
+		ax.axvline(f, color='orange')
 		ax.set_ylabel(f'{vital.name}')
 		lns1 = ax.plot(timestamps, values, color='black', label='Original')
 		# print('| Plotting normalized ewmas...')

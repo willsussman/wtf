@@ -27,6 +27,7 @@ def vitals_wifi(t, T):
             date_split, time_split, rssi_split, txrate_split = line.split()
 
             time = datetime.fromisoformat(f'{date_split} {time_split}')
+            print(f'time={time}, time>t={time>t}, t-time>T={t-time>T}')
             if time > t:
                 continue
             if t - time > T:

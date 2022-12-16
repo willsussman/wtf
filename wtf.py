@@ -48,11 +48,14 @@ def vitals2bits(vitals, element_name, gamma):
 	merged_timestamps = []
 	merged_bits = []
 	fig_all, ax_all = plt.subplots()
+
+	nonempty = False
 	for vital in vitals:
 		print(vital.name)
 		if len(vital.points) == 0:
-			print('Empty; skipping')
+			print('| Empty')
 			continue
+		nonempty = True
 		timestamps, values, ewmas, bits = vital2bits(vital)
 		merge(merged_timestamps, merged_bits, timestamps, bits)
 		ax_all.set_title(element_name)
@@ -87,21 +90,27 @@ def vitals2bits(vitals, element_name, gamma):
 		# for i in range(len(bits)):
 		# 	if bits[i] == 1:
 		# 		bisect.insort(ones, timestamps[i])
-	lnsB = ax_all.plot(merged_timestamps, merged_bits, color='orange', label='OR\'ed WTF bits')
 
-	quantified_bits = quantify_bits(merged_timestamps, merged_bits, gamma)
-	lnsC = ax_all.plot(merged_timestamps, quantified_bits, color='green', label=f'EWMA (γ={gamma})')
-	lns = lnsA + lnsB + lnsC
-	labs = [l.get_label() for l in lns]
-	ax_all.legend(lns, labs, loc=2)
-	plt.figure(fig_all)
-	print(f'Saving {DIR}/all.pdf...')
-	plt.savefig(f'{DIR}/all.pdf')
+	if nonempty:
+	
+		lnsB = ax_all.plot(merged_timestamps, merged_bits, color='orange', label='OR\'ed WTF bits')
 
-	# print('Writing out bits.txt...')
-	# with open("bits.txt", "w") as bitsfile:
-	# 	for i in range(len(merged_timestamps)):
-	# 		bitsfile.write(f'{merged_timestamps[i]} {merged_bits[i]}\n')
+		quantified_bits = quantify_bits(merged_timestamps, merged_bits, gamma)
+		lnsC = ax_all.plot(merged_timestamps, quantified_bits, color='green', label=f'EWMA (γ={gamma})')
+		lns = lnsA + lnsB + lnsC
+		labs = [l.get_label() for l in lns]
+		ax_all.legend(lns, labs, loc=2)
+		plt.figure(fig_all)
+		print(f'Saving {DIR}/all.pdf...')
+		plt.savefig(f'{DIR}/all.pdf')
+
+		# print('Writing out bits.txt...')
+		# with open("bits.txt", "w") as bitsfile:
+		# 	for i in range(len(merged_timestamps)):
+		# 		bitsfile.write(f'{merged_timestamps[i]} {merged_bits[i]}\n')
+
+	else:
+		print('All vitals were empty')
 
 	return merged_timestamps, merged_bits
 

@@ -83,7 +83,7 @@ def main():
 	with open(f'{DIR}/raw.txt', 'a') as outfile:
 		fileno = outfile.fileno()
 		while True:
-			now = datetime.now()
+			now = datetime.now(timezone.utc)
 			sample = sample_airport()
 			rssi = sample.agrCtlRSSI
 			txrate = sample.lastTxRate

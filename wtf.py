@@ -94,26 +94,21 @@ def vitals2bits(vitals, element_name, gamma):
 		# 	if bits[i] == 1:
 		# 		bisect.insort(ones, timestamps[i])
 
-	if nonempty:
+	# if nonempty:
 	
-		lnsB = ax_all.plot(merged_timestamps, merged_bits, color='orange', label='OR\'ed WTF bits')
+	# 	lnsB = ax_all.plot(merged_timestamps, merged_bits, color='orange', label='OR\'ed WTF bits')
 
-		quantified_bits = quantify_bits(merged_timestamps, merged_bits, gamma)
-		lnsC = ax_all.plot(merged_timestamps, quantified_bits, color='green', label=f'EWMA (γ={gamma})')
-		lns = lnsA + lnsB + lnsC
-		labs = [l.get_label() for l in lns]
-		ax_all.legend(lns, labs, loc=2)
-		plt.figure(1)
-		print(f'Saving {DIR}/all.pdf...')
-		plt.savefig(f'{DIR}/all.pdf')
+	# 	quantified_bits = quantify_bits(merged_timestamps, merged_bits, gamma)
+	# 	lnsC = ax_all.plot(merged_timestamps, quantified_bits, color='green', label=f'EWMA (γ={gamma})')
+	# 	lns = lnsA + lnsB + lnsC
+	# 	labs = [l.get_label() for l in lns]
+	# 	ax_all.legend(lns, labs, loc=2)
+	# 	plt.figure(1)
+	# 	print(f'Saving {DIR}/all.pdf...')
+	# 	plt.savefig(f'{DIR}/all.pdf')
 
-		# print('Writing out bits.txt...')
-		# with open("bits.txt", "w") as bitsfile:
-		# 	for i in range(len(merged_timestamps)):
-		# 		bitsfile.write(f'{merged_timestamps[i]} {merged_bits[i]}\n')
-
-	else:
-		print('All vitals were empty')
+	# else:
+	# 	print('All vitals were empty')
 
 	return merged_timestamps, merged_bits
 

@@ -17,9 +17,14 @@ def vitals_cpu(t, T):
 	# now = datetime.now()
 	with FileReadBackwards(f'{DIR}/raw.txt', encoding="utf-8") as frb:
 
+# 2022-12-16 08:00:21.094628               disk0               disk2       cpu    load average
+# 2022-12-16 08:00:21.094877     KB/t  tps  MB/s     KB/t  tps  MB/s  us sy id   1m   5m   15m
+# 2022-12-16 08:00:21.094949     9.47  147  1.36    10.81  218  2.30  33 26 41  6.19 5.06 5.06
+
 		# KBpt = []
 		# tps = []
 		# MBps = []
+		# ...
 		us = []
 		sy = []
 		idle = []
@@ -30,11 +35,13 @@ def vitals_cpu(t, T):
 		for line in frb:
 
 			splits = line.split()
-			if len(splits) != 11:
-				continue
-			date_split, time_split, KBpt_split, tps_split, MBps_split, us_split, sy_split, idle_split, load1m_split, load5m_split, load15m_split = splits
-			if KBpt_split == 'KB/t':
-				continue
+			# if len(splits) == 0:
+			# 	continue
+			# date_split, time_split, KBpt_split, tps_split, MBps_split, us_split, sy_split, idle_split, load1m_split, load5m_split, load15m_split = splits
+			# if KBpt_split == 'KB/t':
+			# 	continue
+
+			date_split, time_split, us_split, sy_split, idle_split = splits
 
 			time = datetime.fromisoformat(f'{date_split} {time_split}')
 			if time > t:

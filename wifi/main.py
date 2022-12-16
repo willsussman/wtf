@@ -18,7 +18,7 @@ def dBm2mW(dBm):
     # P_mW = 1 mW * 10^{P_dBm / 10}
     return 10**(dBm/10)
 
-def vitals_wifi(t, T, f):
+def vitals_wifi(t, T, f, fake):
     # now = datetime.now()
     with FileReadBackwards(f'{DIR}/raw.txt', encoding="utf-8") as frb:
         rssi_linear = []
@@ -36,7 +36,7 @@ def vitals_wifi(t, T, f):
 
             rssi_linear.insert(0, wtf.Point(time, dBm2mW(int(rssi_split))))
 
-            if f is not None and time >= f:
+            if f is not None and fake and time >= f:
                 txr = BW
             else:
                 txr = int(txrate_split)
@@ -60,6 +60,7 @@ def main():
     parser.add_argument('-hr', type=int, default=0)
     parser.add_argument('-w', type=int, default=0)
     parser.add_argument('-f', type=str)
+    parser.add_argument('--fake', action='store_true')
     args = parser.parse_args()
 
     tobj = datetime.fromisoformat(args.t)
@@ -70,7 +71,7 @@ def main():
     # tobj = datetime.strptime(args.t, '%Y-%m-%d %H:%M:%S.%f')
     Tobj = timedelta(days=args.d, seconds=args.s, microseconds=args.us, milliseconds=args.ms, minutes=args.m, hours=args.hr, weeks=args.w)
 
-    vitals = vitals_wifi(tobj, Tobj, fobj)
+    vitals = vitals_wifi(tobj, Tobj, fobj, args.fake)
     return wtf.vitals2bits(vitals, 'Wi-Fi', GAMMA, fobj)
 
 if __name__ == '__main__':

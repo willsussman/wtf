@@ -50,6 +50,9 @@ def vitals2bits(vitals, element_name, gamma):
 	fig_all, ax_all = plt.subplots()
 	for vital in vitals:
 		print(vital.name)
+		if len(timestamps) == 0:
+			print('Empty; skipping')
+			continue
 		timestamps, values, ewmas, bits = vital2bits(vital)
 		merge(merged_timestamps, merged_bits, timestamps, bits)
 		ax_all.set_title(element_name)

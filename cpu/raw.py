@@ -92,7 +92,7 @@ def main():
 			# if sample is None:
 			# 	continue
 			# rssi = sample.agrCtlRSSI
-			# txrate = sample.lastTxRate
+            # txrate = sample.lastTxRate
             pct = psutil.cpu_percent(interval=SAMPLING_INTERVAL)
             outfile.write(f'{now} {pct}\n')
             outfile.flush()

@@ -15,7 +15,7 @@ JITSI_DATABASE = 'jitsi'
 JITSI_MEASUREMENT = 'jitsi_stats'
 GAMMA = 0.5
 
-def vitals_jitsi():
+def vitals_jitsi(t, T):
 	client = InfluxDBClient(host=JITSI_HOST,
 	                        port=JITSI_PORT,
 	                        # username='',
@@ -54,6 +54,9 @@ def main():
 	parser.add_argument('-T', type=str, required=True)
 	args = parser.parse_args()
 	print(f'Requested T={args.T} before t={args.t}')
+
+	# 2022-12-16 02:15:59.625592+00:00
+	datetime.strptime(t, '%Y-%m-%d %H:%M:%S.%f')
 
 	vitals = vitals_jitsi()
 	return wtf.vitals2bits(vitals, 'Jitsi', GAMMA)

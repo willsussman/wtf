@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 
 import subprocess
-from datetime import timezone
 from datetime import datetime
 import time
 import os
@@ -84,7 +83,8 @@ def main():
 	with open(f'{DIR}/raw.txt', 'a') as outfile:
 		fileno = outfile.fileno()
 		while True:
-			now = datetime.now(timezone.utc)
+			# now = datetime.now(timezone.utc)
+			now = datetime.utcnow()
 			sample = sample_airport()
 			rssi = sample.agrCtlRSSI
 			txrate = sample.lastTxRate

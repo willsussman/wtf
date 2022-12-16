@@ -3,4 +3,5 @@
 from datetime import timezone
 from datetime import datetime
 
-print(datetime.now(timezone.utc))
+# print(datetime.now(timezone.utc))
+print(datetime.utcnow())

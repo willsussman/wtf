@@ -3,7 +3,7 @@
 import sys
 sys.path.insert(1, '../')
 
-DIR = './logs'
+DIR = './data'
 GAMMA = 0.5
 
 import wtf

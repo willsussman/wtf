@@ -17,20 +17,18 @@ def vitals_cpu(t, T):
 	# now = datetime.now()
 	with FileReadBackwards(f'{DIR}/raw.txt', encoding="utf-8") as frb:
 
-# 2022-12-16 08:00:21.094628               disk0               disk2       cpu    load average
-# 2022-12-16 08:00:21.094877     KB/t  tps  MB/s     KB/t  tps  MB/s  us sy id   1m   5m   15m
-# 2022-12-16 08:00:21.094949     9.47  147  1.36    10.81  218  2.30  33 26 41  6.19 5.06 5.06
-
 		# KBpt = []
 		# tps = []
 		# MBps = []
 		# ...
-		us = []
-		sy = []
-		idle = []
+		# us = []
+		# sy = []
+		# idle = []
 		# load1m = []
 		# load5m = []
 		# load15m = []
+
+		pct = []
 
 		for line in frb:
 
@@ -41,7 +39,7 @@ def vitals_cpu(t, T):
 			# if KBpt_split == 'KB/t':
 			# 	continue
 
-			date_split, time_split, us_split, sy_split, idle_split = splits
+			date_split, time_split, pct_split = splits
 
 			time = datetime.fromisoformat(f'{date_split} {time_split}')
 			if time > t:
@@ -51,23 +49,25 @@ def vitals_cpu(t, T):
 			# KBpt.insert(0, wtf.Point(time, float(KBpt_split)))
 			# tps.insert(0, wtf.Point(time, int(tps_split)))
 			# MBps.insert(0, wtf.Point(time, float(MBps_split)))
-			us.insert(0, wtf.Point(time, int(us_split)))
-			sy.insert(0, wtf.Point(time, int(sy_split)))
-			idle.insert(0, wtf.Point(time, int(idle_split)))
+			# us.insert(0, wtf.Point(time, int(us_split)))
+			# sy.insert(0, wtf.Point(time, int(sy_split)))
+			# idle.insert(0, wtf.Point(time, int(idle_split)))
 			# load1m.insert(0, wtf.Point(time, float(load1m_split)))
 			# load5m.insert(0, wtf.Point(time, float(load5m_split)))
 			# load15m.insert(0, wtf.Point(time, float(load15m_split)))
+			pct.insert(0, wtf.Point(time, float(pct_split)))
 
 	return [
 		# wtf.Vital('KBpt', KBpt, 0.1, operator.lt, 0.5),
 		# wtf.Vital('tps', tps, 0.1, operator.lt, 0.5),
 		# wtf.Vital('MBps', MBps, 0.1, operator.lt, 0.5),
-		wtf.Vital('us', us, 0.1, operator.gt, 2.0),
-		wtf.Vital('sy', sy, 0.1, operator.gt, 2.0),
-		wtf.Vital('idle', idle, 0.1, operator.lt, 0.5),
+		# wtf.Vital('us', us, 0.1, operator.gt, 2.0),
+		# wtf.Vital('sy', sy, 0.1, operator.gt, 2.0),
+		# wtf.Vital('idle', idle, 0.1, operator.lt, 0.5),
 		# wtf.Vital('load1m', load1m, 0.1, operator.gt, 2.0),
 		# wtf.Vital('load5m', load5m, 0.1, operator.gt, 2.0),
 		# wtf.Vital('load15m', load15m, 0.1, operator.gt, 2.0),
+		wtf.Vital('pct', pct, 0.1, operator.gt, 2.0),
 	]
 
 def main():
